@@ -4,7 +4,7 @@ import numpy as np
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
-from data_preprocessing import preprocess_data
+from src.data_preprocessing import preprocess_data
 import plotly.express as px
 
 # Configuration de la page
@@ -437,7 +437,7 @@ elif page == "Visualisation des Données":
     
     # Chargement des données
     try:
-        df = pd.read_csv('Base de donnée ML.csv')
+        df = pd.read_csv('data/data.csv')
         
         # Sélection du type de visualisation
         viz_type = st.selectbox(

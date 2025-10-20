@@ -11,7 +11,7 @@ from sklearn.model_selection import cross_val_score, learning_curve
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
-from data_preprocessing import load_data, preprocess_data, split_data
+from src.data_preprocessing import load_data, preprocess_data, split_data
 
 def plot_confusion_matrix(y_true, y_pred, model_name):
     """Visualise la matrice de confusion"""
@@ -176,11 +176,8 @@ def plot_results(results_df):
     plt.close()
 
 if __name__ == "__main__":
-    # Chargement des données prétraitées
-    from data_preprocessing import load_data, preprocess_data, split_data
-    
     # Chargement et prétraitement des données
-    df = load_data('Base de donnée ML.csv')
+    df = load_data('data/data.csv')
     df_processed = preprocess_data(df, is_training=True)
     X_train, X_test, y_train, y_test = split_data(df_processed)
     
@@ -198,4 +195,4 @@ if __name__ == "__main__":
     plot_results(results)
     
     # Sauvegarde des résultats
-    results.to_csv('model_results.csv', index=False) 
+    results.to_csv('reports/model_results.csv', index=False)

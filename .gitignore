@@ -38,8 +38,11 @@ venv.bak/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# Data files (optionnel - vous pouvez les inclure si nécessaire)
+# Data files
+# Ignore datasets by default, but keep tracked curated files in data/
 *.csv
+!data/data.csv
+!reports/model_results.csv
 *.xlsx
 *.json
 
