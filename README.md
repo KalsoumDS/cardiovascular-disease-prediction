@@ -182,7 +182,7 @@ Le modèle **Régression Logistique** obtient les meilleures performances avec :
 
 ### 🏠 Page d'Accueil - Présentation du Système
 <div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/homepage.png" alt="Page d'Accueil" width="800"/>
+  <img src="assets/screenshots/homepage.png" alt="Page d'Accueil" width="800"/>
   <p><em>Interface d'accueil avec navigation intuitive et présentation des fonctionnalités clés</em></p>
 </div>
 
@@ -196,7 +196,7 @@ Le modèle **Régression Logistique** obtient les meilleures performances avec :
 
 ### 🔮 Interface de Prédiction - Fonctionnalité Principale
 <div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/prediction_interface.png" alt="Interface de Prédiction" width="800"/>
+  <img src="assets/screenshots/prediction_interface.png" alt="Interface de Prédiction" width="800"/>
   <p><em>Formulaire interactif avec résultats en temps réel et recommandations personnalisées</em></p>
 </div>
 
@@ -210,7 +210,7 @@ Le modèle **Régression Logistique** obtient les meilleures performances avec :
 
 ### 📊 Exploration Avancée des Données - Compétences EDA
 <div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/data_exploration.png" alt="Exploration des Données" width="800"/>
+  <img src="assets/screenshots/data_exploration.png" alt="Exploration des Données" width="800"/>
   <p><em>Analyse exploratoire complète avec statistiques descriptives et distribution des classes</em></p>
 </div>
 
@@ -224,7 +224,7 @@ Le modèle **Régression Logistique** obtient les meilleures performances avec :
 
 ### 🔍 Matrice de Corrélation - Analyse des Relations
 <div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/correlation_matrix.png" alt="Matrice de Corrélation" width="800"/>
+  <img src="assets/screenshots/correlation_matrix.png" alt="Matrice de Corrélation" width="800"/>
   <p><em>Heatmap interactive révélant les relations entre les variables médicales</em></p>
 </div>
 
@@ -236,55 +236,27 @@ Le modèle **Régression Logistique** obtient les meilleures performances avec :
 
 ---
 
-### 📊 Analyse des Relations avec la Variable Cible
-<div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/target_analysis.png" alt="Analyse de la Variable Cible" width="800"/>
-  <p><em>Analyse approfondie des relations entre les caractéristiques et la maladie cardiovasculaire</em></p>
-</div>
+### 🎯 **Fonctionnalités Complètes de l'Application**
 
-**🎯 Découvertes Importantes :**
+**📊 Analyse des Relations avec la Variable Cible :**
 - **Distribution des Classes** : 52.8% avec maladie, 47.2% sans maladie
 - **Variables Clés** : `cp` (douleur thoracique) et `exang` (angine d'effort) les plus corrélées
 - **Analyse par Âge** : Distribution similaire entre les groupes (médiane ~54 ans)
 - **Statistiques Comparatives** : Analyse détaillée par classe de maladie
 
----
-
-### 🧠 Performance des Modèles - Expertise Machine Learning
-<div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/model_performance.png" alt="Performance des Modèles" width="800"/>
-  <p><em>Comparaison détaillée des performances avec métriques avancées</em></p>
-</div>
-
-**🏆 Résultats Exceptionnels :**
+**🧠 Performance des Modèles - Expertise Machine Learning :**
 - **Régression Logistique** : 87% accuracy, 86.8% precision, 90.1% recall
 - **Comparaison Multi-Modèles** : 5 algorithmes évalués simultanément
 - **Métriques Complètes** : Accuracy, Precision, Recall, F1-Score
 - **Interprétation Automatique** : Explications claires des performances
 
----
-
-### 📚 Documentation et Aide - Professionnalisme
-<div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/help_documentation.png" alt="Documentation" width="800"/>
-  <p><em>Guide utilisateur complet avec instructions détaillées</em></p>
-</div>
-
-**📖 Fonctionnalités de Support :**
+**📚 Documentation et Aide - Professionnalisme :**
 - **Guide d'Utilisation** : Instructions étape par étape
 - **Interprétation des Résultats** : Guide pour comprendre les prédictions
 - **Navigation Intuitive** : Structure claire et accessible
 - **Support Utilisateur** : FAQ et recommandations générales
 
----
-
-### ℹ️ Page À Propos - Technologies et Méthodologie
-<div align="center">
-  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/about_page.png" alt="Page À Propos" width="800"/>
-  <p><em>Présentation technique complète des technologies et modèles utilisés</em></p>
-</div>
-
-**🔧 Stack Technologique :**
+**🔧 Stack Technologique Complet :**
 - **Backend** : Python, Scikit-learn, Pandas, NumPy
 - **Frontend** : Streamlit, Plotly, Matplotlib/Seaborn
 - **Modèles ML** : 5 algorithmes (Logistic Regression, KNN, Decision Tree, Random Forest, KMeans)
