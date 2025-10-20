@@ -13,7 +13,7 @@ st.title("Exploration et Analyse des Données")
 
 try:
     # Chargement des données
-    df = pd.read_csv('Base de donnée ML.csv')
+    df = pd.read_csv('data/data.csv')
     
     # Affichage des informations générales
     st.sidebar.header("Informations sur la Base de Données")

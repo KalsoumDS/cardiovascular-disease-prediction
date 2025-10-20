@@ -13,8 +13,8 @@ st.set_page_config(page_title="Analyse des Données et des Modèles", page_icon=
 
 # Chargement des données et des résultats
 try:
-    results_df = pd.read_csv('model_results.csv')
-    df = pd.read_csv('Base de donnée ML.csv')
+    results_df = pd.read_csv('reports/model_results.csv')
+    df = pd.read_csv('data/data.csv')
     
     # Création d'onglets pour séparer l'analyse des données et l'analyse des modèles
     tab1, tab2 = st.tabs(["📈 Analyse des Relations", "🎯 Performance des Modèles"])
