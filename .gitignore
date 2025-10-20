@@ -43,14 +43,18 @@ venv.bak/
 *.csv
 !data/data.csv
 !reports/model_results.csv
+!reports/scaler_params.csv
+!reports/feature_columns.csv
 *.xlsx
 *.json
 
-# Model files (optionnel - vous pouvez les inclure si nécessaire)
+# Model files
+# Autoriser le suivi des modèles dans models/
 *.joblib
 *.pkl
 *.h5
 *.model
+!models/*.joblib
 
 # Images générées
 *.png

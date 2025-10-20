@@ -1,8 +1,16 @@
 # 🫀 Système de Prédiction des Maladies Cardiovasculaires
 
+<div align="center">
+
+## 🚀 **APPLICATION EN LIGNE - DÉMO INTERACTIVE** 🚀
+
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cardiovascular-disease-prediction-ajmznkpqhaewp2xwdmhcgc.streamlit.app/)
 
-> Démo en ligne: https://cardiovascular-disease-prediction-ajmznkpqhaewp2xwdmhcgc.streamlit.app/
+### 🎯 **[👉 CLIQUEZ ICI POUR TESTER L'APPLICATION 👈](https://cardiovascular-disease-prediction-ajmznkpqhaewp2xwdmhcgc.streamlit.app/)**
+
+**🌐 URL Directe :** `https://cardiovascular-disease-prediction-ajmznkpqhaewp2xwdmhcgc.streamlit.app/`
+
+</div>
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org/)
@@ -82,6 +90,13 @@ graph TD
 ```
 
 ## 🚀 Installation
+
+### 🌐 **Accès Rapide - Application en Ligne**
+> **🎯 [CLIQUEZ ICI POUR TESTER L'APPLICATION DIRECTEMENT](https://cardiovascular-disease-prediction-ajmznkpqhaewp2xwdmhcgc.streamlit.app/)**
+> 
+> **Aucune installation requise - Testez immédiatement en ligne !**
+
+### 💻 Installation Locale (Optionnel)
 
 ### Prérequis
 - Python 3.8+
