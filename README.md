@@ -27,6 +27,14 @@
 
 Ce projet développe un système intelligent de prédiction des risques de maladies cardiovasculaires en utilisant des techniques avancées de Machine Learning. L'application offre une interface utilisateur intuitive permettant aux utilisateurs d'obtenir une évaluation personnalisée de leur risque cardiovasculaire.
 
+### 🚀 Démonstration en Direct
+
+> **🎬 Application Interactive** : [Lancer la démonstration](http://localhost:8501) *(disponible localement)*
+> 
+> **📱 Interface Mobile-Friendly** : Design responsive adapté à tous les écrans
+> 
+> **⚡ Prédiction en Temps Réel** : Résultats instantanés avec recommandations personnalisées
+
 ### 🎯 Objectifs
 - **Prédiction précise** : Développer des modèles ML performants pour la prédiction des maladies cardiovasculaires
 - **Interface intuitive** : Créer une application web accessible et facile à utiliser
@@ -138,31 +146,149 @@ L'application sera accessible à l'adresse : `http://localhost:8501`
 - **F1-Score** : Moyenne harmonique
 - **AUC-ROC** : Aire sous la courbe ROC
 
-## 📈 Résultats
+## 📈 Résultats et Performances
+
+### 🏆 Métriques Clés du Projet
+
+| Métrique | Valeur | Description |
+|----------|--------|-------------|
+| **📊 Dataset** | 12,310 observations | Base de données complète et équilibrée |
+| **🎯 Variables** | 12 caractéristiques | Paramètres cliniques essentiels |
+| **🧠 Modèles ML** | 5 algorithmes | Comparaison multi-modèles |
+| **⚡ Prédiction** | < 1 seconde | Temps de réponse instantané |
+| **📱 Interface** | 100% responsive | Compatible mobile et desktop |
 
 ### 🏆 Performance des Modèles
-Le modèle **Random Forest** obtient les meilleures performances avec :
-- **Accuracy** : 88.5%
-- **Precision** : 87.2%
-- **Recall** : 89.1%
-- **F1-Score** : 88.1%
+Le modèle **Régression Logistique** obtient les meilleures performances avec :
+- **Accuracy** : **87.0%** 🎯
+- **Precision** : **86.8%** 🎯
+- **Recall** : **90.1%** 🎯
+- **F1-Score** : **88.4%** 🎯
 
-### 📊 Caractéristiques Importantes
-1. **Âge** : Facteur de risque principal
-2. **Fréquence cardiaque maximale** : Indicateur de condition physique
-3. **Cholestérol** : Marqueur de santé cardiovasculaire
-4. **Dépression ST** : Signe d'ischémie myocardique
+### 📊 Caractéristiques Importantes Identifiées
+1. **Douleur Thoracique (cp)** : Variable la plus prédictive
+2. **Angine d'Effort (exang)** : Indicateur de stress cardiaque
+3. **Dépression ST (oldpeak)** : Signe d'ischémie myocardique
+4. **Âge** : Facteur de risque progressif
+5. **Sexe** : Différences de prédisposition
 
-## 🖼️ Captures d'Écran
+### 🎯 Insights Découverts
+- **Distribution Équilibrée** : 52.8% avec maladie, 47.2% sans maladie
+- **Risque Multifactoriel** : Aucune variable dominante unique
+- **Variables Indépendantes** : Faible corrélation entre caractéristiques
+- **Optimisation ML** : Structure favorable pour l'apprentissage
 
-### 🏠 Page d'Accueil
-![Accueil](https://via.placeholder.com/800x400/3498db/ffffff?text=Page+d%27Accueil)
+## 🖼️ Démonstration Interactive
 
-### 🔮 Interface de Prédiction
-![Prédiction](https://via.placeholder.com/800x400/2ecc71/ffffff?text=Interface+de+Prédiction)
+### 🏠 Page d'Accueil - Présentation du Système
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/homepage.png" alt="Page d'Accueil" width="800"/>
+  <p><em>Interface d'accueil avec navigation intuitive et présentation des fonctionnalités clés</em></p>
+</div>
 
-### 📊 Visualisations
-![Visualisations](https://via.placeholder.com/800x400/e74c3c/ffffff?text=Graphiques+Interactifs)
+**✨ Fonctionnalités Mises en Valeur :**
+- **Évaluation Rapide** : Interface simple pour l'évaluation du risque
+- **Analyse Détaillée** : Visualisations avancées des indicateurs de santé  
+- **Conseils Personnalisés** : Recommandations adaptées au profil utilisateur
+- **Processus en 3 étapes** : Guide clair pour l'utilisation
+
+---
+
+### 🔮 Interface de Prédiction - Fonctionnalité Principale
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/prediction_interface.png" alt="Interface de Prédiction" width="800"/>
+  <p><em>Formulaire interactif avec résultats en temps réel et recommandations personnalisées</em></p>
+</div>
+
+**🎯 Capacités Démonstrées :**
+- **Formulaire Médical Complet** : 11 paramètres cliniques essentiels
+- **Prédiction Instantanée** : Résultats avec probabilité de risque (3% dans cet exemple)
+- **Recommandations Intelligentes** : Conseils adaptés au niveau de risque
+- **Interface Utilisateur** : Design professionnel et accessible
+
+---
+
+### 📊 Exploration Avancée des Données - Compétences EDA
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/data_exploration.png" alt="Exploration des Données" width="800"/>
+  <p><em>Analyse exploratoire complète avec statistiques descriptives et distribution des classes</em></p>
+</div>
+
+**📈 Analyses Incluses :**
+- **Aperçu des Données** : 12,310 observations, 12 variables
+- **Statistiques Descriptives** : Moyennes, médianes, écarts-types
+- **Distribution Équilibrée** : 5,871 cas sans maladie / 6,439 cas avec maladie
+- **Interprétation Automatique** : Insights générés automatiquement
+
+---
+
+### 🔍 Matrice de Corrélation - Analyse des Relations
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/correlation_matrix.png" alt="Matrice de Corrélation" width="800"/>
+  <p><em>Heatmap interactive révélant les relations entre les variables médicales</em></p>
+</div>
+
+**🧠 Insights Clés :**
+- **Variables Indépendantes** : Faible corrélation entre les caractéristiques
+- **Risque Multifactoriel** : Aucune variable dominante pour la prédiction
+- **Optimisation ML** : Structure favorable pour l'apprentissage automatique
+- **Interprétation Intelligente** : Explications automatiques des patterns
+
+---
+
+### 📊 Analyse des Relations avec la Variable Cible
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/target_analysis.png" alt="Analyse de la Variable Cible" width="800"/>
+  <p><em>Analyse approfondie des relations entre les caractéristiques et la maladie cardiovasculaire</em></p>
+</div>
+
+**🎯 Découvertes Importantes :**
+- **Distribution des Classes** : 52.8% avec maladie, 47.2% sans maladie
+- **Variables Clés** : `cp` (douleur thoracique) et `exang` (angine d'effort) les plus corrélées
+- **Analyse par Âge** : Distribution similaire entre les groupes (médiane ~54 ans)
+- **Statistiques Comparatives** : Analyse détaillée par classe de maladie
+
+---
+
+### 🧠 Performance des Modèles - Expertise Machine Learning
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/model_performance.png" alt="Performance des Modèles" width="800"/>
+  <p><em>Comparaison détaillée des performances avec métriques avancées</em></p>
+</div>
+
+**🏆 Résultats Exceptionnels :**
+- **Régression Logistique** : 87% accuracy, 86.8% precision, 90.1% recall
+- **Comparaison Multi-Modèles** : 5 algorithmes évalués simultanément
+- **Métriques Complètes** : Accuracy, Precision, Recall, F1-Score
+- **Interprétation Automatique** : Explications claires des performances
+
+---
+
+### 📚 Documentation et Aide - Professionnalisme
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/help_documentation.png" alt="Documentation" width="800"/>
+  <p><em>Guide utilisateur complet avec instructions détaillées</em></p>
+</div>
+
+**📖 Fonctionnalités de Support :**
+- **Guide d'Utilisation** : Instructions étape par étape
+- **Interprétation des Résultats** : Guide pour comprendre les prédictions
+- **Navigation Intuitive** : Structure claire et accessible
+- **Support Utilisateur** : FAQ et recommandations générales
+
+---
+
+### ℹ️ Page À Propos - Technologies et Méthodologie
+<div align="center">
+  <img src="https://github.com/KalsoumDS/cardiovascular-disease-prediction/assets/screenshots/about_page.png" alt="Page À Propos" width="800"/>
+  <p><em>Présentation technique complète des technologies et modèles utilisés</em></p>
+</div>
+
+**🔧 Stack Technologique :**
+- **Backend** : Python, Scikit-learn, Pandas, NumPy
+- **Frontend** : Streamlit, Plotly, Matplotlib/Seaborn
+- **Modèles ML** : 5 algorithmes (Logistic Regression, KNN, Decision Tree, Random Forest, KMeans)
+- **Déploiement** : Application web accessible et responsive
 
 ## 🔧 Technologies
 
