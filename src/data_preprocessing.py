@@ -75,16 +75,16 @@ def preprocess_data(df, is_training=False):
                 'scale': scaler.scale_
             },
             index=numeric_cols
-        ).to_csv('scaler_params.csv')
+        ).to_csv('reports/scaler_params.csv')
     else:
         # En phase de prédiction, on utilise les paramètres sauvegardés
-        scaler_params = pd.read_csv('scaler_params.csv', index_col=0)
+        scaler_params = pd.read_csv('reports/scaler_params.csv', index_col=0)
         for col in numeric_cols:
             df_processed[col] = (df_processed[col] - scaler_params.loc[col, 'mean']) / scaler_params.loc[col, 'scale']
     
     # Réorganiser les colonnes dans le même ordre que lors de l'entraînement
     if not is_training:
-        expected_columns = pd.read_csv('feature_columns.csv')['0'].tolist()
+        expected_columns = pd.read_csv('reports/feature_columns.csv')['0'].tolist()
         df_processed = df_processed.reindex(columns=expected_columns, fill_value=0)
     
     return df_processed

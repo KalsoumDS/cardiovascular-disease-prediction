@@ -182,7 +182,7 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = split_data(df_processed)
     
     # Sauvegarder la liste des colonnes
-    pd.Series(X_train.columns).to_csv('feature_columns.csv', index=False)
+    pd.Series(X_train.columns).to_csv('reports/feature_columns.csv', index=False)
     
     # Entraînement et évaluation des modèles
     results = train_and_evaluate_models(X_train, X_test, y_train, y_test)
