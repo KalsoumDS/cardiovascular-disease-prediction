@@ -1,5 +1,9 @@
 # 🫀 Système de Prédiction des Maladies Cardiovasculaires
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cardiovascular-disease-prediction-ajmznkpqhaewp2xwdmhcgc.streamlit.app/)
+
+> Démo en ligne: https://cardiovascular-disease-prediction-ajmznkpqhaewp2xwdmhcgc.streamlit.app/
+
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org/)
 [![Scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
