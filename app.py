@@ -227,7 +227,7 @@ if page == "Accueil":
     with col3:
         st.markdown("""
             <div style='text-align: center;'>
-                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>‍</h2>
+                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'></h2>
                 <h3 style='margin-top: 0;'>Conseils Personnalisés</h3>
                 <p style='color: #cccccc;'>Recevez des recommandations adaptées à votre profil</p>
             </div>
@@ -411,11 +411,11 @@ elif page == "Prédiction":
                 st.markdown("""
                     <div style='background-color: #1a1a1a; padding: 1rem; border-radius: 5px; margin-top: 1rem;'>
                         <ul style='color: #ffffff; margin: 0; padding-left: 1.5rem;'>
-                            <li style='margin-bottom: 0.5rem;'>‍ Consultez un médecin pour un examen approfondi</li>
+                            <li style='margin-bottom: 0.5rem;'> Consultez un médecin pour un examen approfondi</li>
                             <li style='margin-bottom: 0.5rem;'> Adoptez un régime alimentaire sain et équilibré</li>
-                            <li style='margin-bottom: 0.5rem;'>‍ Pratiquez une activité physique régulière adaptée</li>
+                            <li style='margin-bottom: 0.5rem;'> Pratiquez une activité physique régulière adaptée</li>
                             <li style='margin-bottom: 0.5rem;'> Évitez le tabac et limitez la consommation d'alcool</li>
-                            <li style='margin-bottom: 0.5rem;'>‍ Apprenez à gérer votre stress au quotidien</li>
+                            <li style='margin-bottom: 0.5rem;'> Apprenez à gérer votre stress au quotidien</li>
                         </ul>
                     </div>
                 """, unsafe_allow_html=True)
