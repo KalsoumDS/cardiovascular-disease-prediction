@@ -10,7 +10,7 @@ import plotly.express as px
 # Configuration de la page
 st.set_page_config(
     page_title="Prédiction des Maladies Cardiovasculaires",
-    page_icon="❤️",
+    page_icon="",
     layout="wide"
 )
 
@@ -209,7 +209,7 @@ if page == "Accueil":
     with col1:
         st.markdown("""
             <div style='text-align: center;'>
-                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>❤️</h2>
+                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'></h2>
                 <h3 style='margin-top: 0;'>Évaluation Rapide</h3>
                 <p style='color: #cccccc;'>Obtenez une évaluation personnalisée de votre risque cardiovasculaire</p>
             </div>
@@ -218,7 +218,7 @@ if page == "Accueil":
     with col2:
         st.markdown("""
             <div style='text-align: center;'>
-                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>📊</h2>
+                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'></h2>
                 <h3 style='margin-top: 0;'>Analyse Détaillée</h3>
                 <p style='color: #cccccc;'>Visualisez et comprenez vos indicateurs de santé</p>
             </div>
@@ -227,7 +227,7 @@ if page == "Accueil":
     with col3:
         st.markdown("""
             <div style='text-align: center;'>
-                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>👨‍⚕️</h2>
+                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>‍</h2>
                 <h3 style='margin-top: 0;'>Conseils Personnalisés</h3>
                 <p style='color: #cccccc;'>Recevez des recommandations adaptées à votre profil</p>
             </div>
@@ -245,7 +245,7 @@ if page == "Accueil":
     with col1:
         st.markdown("""
             <div style='text-align: center;'>
-                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>1️⃣</h2>
+                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>1⃣</h2>
                 <h3 style='margin-top: 0;'>Entrez vos données</h3>
                 <p style='color: #cccccc;'>Remplissez un formulaire simple avec vos informations médicales de base</p>
             </div>
@@ -254,7 +254,7 @@ if page == "Accueil":
     with col2:
         st.markdown("""
             <div style='text-align: center;'>
-                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>2️⃣</h2>
+                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>2⃣</h2>
                 <h3 style='margin-top: 0;'>Analyse instantanée</h3>
                 <p style='color: #cccccc;'>Notre système analyse vos données et calcule votre niveau de risque</p>
             </div>
@@ -263,7 +263,7 @@ if page == "Accueil":
     with col3:
         st.markdown("""
             <div style='text-align: center;'>
-                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>3️⃣</h2>
+                <h2 style='font-size: 2.5rem; margin-bottom: 0.5rem;'>3⃣</h2>
                 <h3 style='margin-top: 0;'>Résultats et conseils</h3>
                 <p style='color: #cccccc;'>Obtenez vos résultats et des recommandations pour améliorer votre santé</p>
             </div>
@@ -273,12 +273,12 @@ if page == "Accueil":
     st.write("")
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
-        if st.button("🚀 Commencer l'évaluation", use_container_width=True):
+        if st.button(" Commencer l'évaluation", use_container_width=True):
             st.session_state.page = "Prédiction"
 
     # Note importante
     st.warning("""
-        ⚠️ **Note importante**
+         **Note importante**
         
         Cette application est un outil d'aide à la décision. Elle ne remplace pas l'avis d'un professionnel de santé.
         Consultez toujours votre médecin pour un diagnostic complet.
@@ -392,14 +392,14 @@ elif page == "Prédiction":
             if prediction == 1:
                 st.markdown(f"""
                     <div style='background-color: #2c1c1c; padding: 1rem; border-radius: 5px; text-align: center; margin-bottom: 1rem; border-left: 5px solid #dc3545;'>
-                        <h3 style='color: #dc3545; margin: 0;'>⚠️ Risque élevé de maladie cardiovasculaire</h3>
+                        <h3 style='color: #dc3545; margin: 0;'> Risque élevé de maladie cardiovasculaire</h3>
                         <p style='color: #ffffff; margin: 0.5rem 0 0 0;'>Probabilité: {probability*100:.2f}%</p>
                     </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown(f"""
                     <div style='background-color: #1c2c1c; padding: 1rem; border-radius: 5px; text-align: center; margin-bottom: 1rem; border-left: 5px solid #28a745;'>
-                        <h3 style='color: #28a745; margin: 0;'>✅ Risque faible de maladie cardiovasculaire</h3>
+                        <h3 style='color: #28a745; margin: 0;'> Risque faible de maladie cardiovasculaire</h3>
                         <p style='color: #ffffff; margin: 0.5rem 0 0 0;'>Probabilité: {probability*100:.2f}%</p>
                     </div>
                 """, unsafe_allow_html=True)
@@ -411,11 +411,11 @@ elif page == "Prédiction":
                 st.markdown("""
                     <div style='background-color: #1a1a1a; padding: 1rem; border-radius: 5px; margin-top: 1rem;'>
                         <ul style='color: #ffffff; margin: 0; padding-left: 1.5rem;'>
-                            <li style='margin-bottom: 0.5rem;'>👨‍⚕️ Consultez un médecin pour un examen approfondi</li>
-                            <li style='margin-bottom: 0.5rem;'>🥗 Adoptez un régime alimentaire sain et équilibré</li>
-                            <li style='margin-bottom: 0.5rem;'>🏃‍♂️ Pratiquez une activité physique régulière adaptée</li>
-                            <li style='margin-bottom: 0.5rem;'>🚭 Évitez le tabac et limitez la consommation d'alcool</li>
-                            <li style='margin-bottom: 0.5rem;'>🧘‍♂️ Apprenez à gérer votre stress au quotidien</li>
+                            <li style='margin-bottom: 0.5rem;'>‍ Consultez un médecin pour un examen approfondi</li>
+                            <li style='margin-bottom: 0.5rem;'> Adoptez un régime alimentaire sain et équilibré</li>
+                            <li style='margin-bottom: 0.5rem;'>‍ Pratiquez une activité physique régulière adaptée</li>
+                            <li style='margin-bottom: 0.5rem;'> Évitez le tabac et limitez la consommation d'alcool</li>
+                            <li style='margin-bottom: 0.5rem;'>‍ Apprenez à gérer votre stress au quotidien</li>
                         </ul>
                     </div>
                 """, unsafe_allow_html=True)
@@ -423,9 +423,9 @@ elif page == "Prédiction":
                 st.markdown("""
                     <div style='background-color: #1a1a1a; padding: 1rem; border-radius: 5px; margin-top: 1rem;'>
                         <ul style='color: #ffffff; margin: 0; padding-left: 1.5rem;'>
-                            <li style='margin-bottom: 0.5rem;'>✨ Continuez à maintenir vos bonnes habitudes de vie</li>
-                            <li style='margin-bottom: 0.5rem;'>📊 Surveillez régulièrement vos paramètres de santé</li>
-                            <li style='margin-bottom: 0.5rem;'>🏥 Effectuez des bilans de santé réguliers</li>
+                            <li style='margin-bottom: 0.5rem;'> Continuez à maintenir vos bonnes habitudes de vie</li>
+                            <li style='margin-bottom: 0.5rem;'> Surveillez régulièrement vos paramètres de santé</li>
+                            <li style='margin-bottom: 0.5rem;'> Effectuez des bilans de santé réguliers</li>
                         </ul>
                     </div>
                 """, unsafe_allow_html=True)
