@@ -1,20 +1,20 @@
-# 🤝 Guide de Contribution
+#  Guide de Contribution
 
 Merci de votre intérêt pour contribuer à ce projet de prédiction des maladies cardiovasculaires ! 
 
-## 📋 Table des Matières
+##  Table des Matières
 
-- [🚀 Démarrage Rapide](#-démarrage-rapide)
-- [🔧 Configuration du Développement](#-configuration-du-développement)
-- [📝 Types de Contributions](#-types-de-contributions)
-- [🎯 Standards de Code](#-standards-de-code)
-- [📋 Processus de Contribution](#-processus-de-contribution)
-- [🐛 Signaler un Bug](#-signaler-un-bug)
-- [💡 Proposer une Fonctionnalité](#-proposer-une-fonctionnalité)
-- [📚 Documentation](#-documentation)
-- [❓ Questions](#-questions)
+- [ Démarrage Rapide](#-démarrage-rapide)
+- [ Configuration du Développement](#-configuration-du-développement)
+- [ Types de Contributions](#-types-de-contributions)
+- [ Standards de Code](#-standards-de-code)
+- [ Processus de Contribution](#-processus-de-contribution)
+- [ Signaler un Bug](#-signaler-un-bug)
+- [ Proposer une Fonctionnalité](#-proposer-une-fonctionnalité)
+- [ Documentation](#-documentation)
+- [ Questions](#-questions)
 
-## 🚀 Démarrage Rapide
+##  Démarrage Rapide
 
 1. **Fork** le repository
 2. **Clone** votre fork localement
@@ -23,7 +23,7 @@ Merci de votre intérêt pour contribuer à ce projet de prédiction des maladie
 5. **Testez** vos changements
 6. **Soumettez** une Pull Request
 
-## 🔧 Configuration du Développement
+##  Configuration du Développement
 
 ### Prérequis
 - Python 3.8+
@@ -47,29 +47,29 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## 📝 Types de Contributions
+##  Types de Contributions
 
-### 🐛 Corrections de Bugs
+###  Corrections de Bugs
 - Corriger des erreurs dans le code
 - Améliorer la gestion d'erreurs
 - Optimiser les performances
 
-### ✨ Nouvelles Fonctionnalités
+###  Nouvelles Fonctionnalités
 - Ajouter de nouveaux modèles ML
 - Améliorer l'interface utilisateur
 - Ajouter de nouvelles visualisations
 
-### 📚 Documentation
+###  Documentation
 - Améliorer le README
 - Ajouter des commentaires dans le code
 - Créer des tutoriels
 
-### 🧪 Tests
+###  Tests
 - Ajouter des tests unitaires
 - Améliorer la couverture de tests
 - Tests d'intégration
 
-## 🎯 Standards de Code
+##  Standards de Code
 
 ### Style de Code
 - Suivre PEP 8 pour Python
@@ -105,7 +105,7 @@ feat(prediction): add new neural network model
 Closes #15
 ```
 
-## 📋 Processus de Contribution
+##  Processus de Contribution
 
 ### 1. Créer une Branche
 ```bash
@@ -144,7 +144,7 @@ git push origin feature/nom-de-votre-fonctionnalite
 - Décrivez clairement vos changements
 - Référencez les issues concernées
 
-## 🐛 Signaler un Bug
+##  Signaler un Bug
 
 ### Avant de Signaler
 1. Vérifiez que le bug n'a pas déjà été signalé
@@ -176,7 +176,7 @@ Si applicable, ajoutez des captures d'écran.
 Toute autre information pertinente.
 ```
 
-## 💡 Proposer une Fonctionnalité
+##  Proposer une Fonctionnalité
 
 ### Template de Feature Request
 ```markdown
@@ -196,7 +196,7 @@ Autres solutions que vous avez considérées.
 Toute autre information pertinente.
 ```
 
-## 📚 Documentation
+##  Documentation
 
 ### Améliorer la Documentation
 - Corriger les erreurs de frappe
@@ -216,7 +216,7 @@ docs/
     └── advanced_features.py
 ```
 
-## ❓ Questions
+##  Questions
 
 ### Où Poser des Questions
 - **Issues GitHub** : Pour les bugs et fonctionnalités
@@ -229,14 +229,14 @@ docs/
 - Questions sur le développement
 - Questions sur la contribution
 
-## 🏆 Reconnaissance
+##  Reconnaissance
 
 Tous les contributeurs seront mentionnés dans :
 - Le fichier CONTRIBUTORS.md
 - Les notes de version
 - La documentation
 
-## 📞 Contact
+##  Contact
 
 - **Maintainer** : [Votre Nom]
 - **Email** : [votre.email@example.com]
@@ -244,4 +244,4 @@ Tous les contributeurs seront mentionnés dans :
 
 ---
 
-Merci de contribuer à ce projet ! Votre aide est précieuse pour améliorer la prédiction des maladies cardiovasculaires. 🫀❤️
+Merci de contribuer à ce projet ! Votre aide est précieuse pour améliorer la prédiction des maladies cardiovasculaires. 
