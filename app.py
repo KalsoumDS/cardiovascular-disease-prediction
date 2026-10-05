@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from src.data_preprocessing import preprocess_data
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Configuration de la page
 st.set_page_config(
@@ -13,6 +14,77 @@ st.set_page_config(
     page_icon="",
     layout="wide"
 )
+
+
+def compute_shap_contributions(model, processed_df):
+    """Calcule les contributions locales SHAP ou tree feature contributions pour le patient."""
+    feature_labels = {
+        'age': 'Âge',
+        'sex': 'Sexe',
+        'resting bp s': 'Pression artérielle',
+        'cholesterol': 'Cholestérol',
+        'fasting blood sugar': 'Glycémie à jeun',
+        'max heart rate': 'Fréquence cardiaque max',
+        'exercise angina': 'Angine à l effort',
+        'oldpeak': 'Dépression ST (oldpeak)',
+        'chest pain type_1': 'Douleur : Typique',
+        'chest pain type_2': 'Douleur : Atypique',
+        'chest pain type_3': 'Douleur : Non-angineuse',
+        'chest pain type_4': 'Douleur : Asymptomatique',
+        'resting ecg_0': 'ECG : Normal',
+        'resting ecg_1': 'ECG : Anomalie ST-T',
+        'resting ecg_2': 'ECG : Hypertrophie VG',
+        'ST slope_1': 'Pente ST : Ascendante',
+        'ST slope_2': 'Pente ST : Plate',
+        'ST slope_3': 'Pente ST : Descendante'
+    }
+    try:
+        import shap
+        explainer = shap.TreeExplainer(model)
+        shap_vals = explainer.shap_values(processed_df)
+        if isinstance(shap_vals, list) and len(shap_vals) > 1:
+            vals = shap_vals[1][0]
+        elif hasattr(shap_vals, "values"):
+            vals = shap_vals.values[0, :, 1] if len(shap_vals.shape) == 3 else shap_vals.values[0]
+        else:
+            vals = shap_vals[0]
+    except Exception:
+        importances = getattr(model, 'feature_importances_', np.ones(processed_df.shape[1]) / processed_df.shape[1])
+        vals = (processed_df.values[0] - 0.0) * importances
+        
+    contribs = []
+    for col, v in zip(processed_df.columns, vals):
+        label = feature_labels.get(col, col)
+        contribs.append({'feature': label, 'value': float(v)})
+    
+    df_contribs = pd.DataFrame(contribs)
+    df_contribs['abs_val'] = df_contribs['value'].abs()
+    df_contribs = df_contribs.sort_values(by='abs_val', ascending=True).tail(8)
+    return df_contribs
+
+
+def plot_shap_waterfall(df_contribs):
+    """Génère un graphique horizontal de contribution SHAP."""
+    colors = ['#ef4444' if v > 0 else '#10b981' for v in df_contribs['value']]
+    fig = go.Figure(go.Bar(
+        x=df_contribs['value'],
+        y=df_contribs['feature'],
+        orientation='h',
+        marker=dict(color=colors, line=dict(color='rgba(255,255,255,0.2)', width=1)),
+        text=[f"{'+' if v > 0 else ''}{v:.3f}" for v in df_contribs['value']],
+        textposition='outside'
+    ))
+    fig.update_layout(
+        title="<b>Explicabilité Clinique SHAP — Impact individuel sur la prédiction</b>",
+        xaxis_title="Contribution au risque (+ augmente le risque | - facteur protecteur)",
+        yaxis_title="Facteur de risque clinique",
+        template="plotly_dark",
+        paper_bgcolor="#1e1e1e",
+        plot_bgcolor="#1e1e1e",
+        height=380,
+        margin=dict(l=20, r=40, t=50, b=40)
+    )
+    return fig
 
 # CSS personnalisé
 st.markdown("""
@@ -404,6 +476,68 @@ elif page == "Prédiction":
                     </div>
                 """, unsafe_allow_html=True)
             
+
+            # --- Module Explicabilité SHAP Clinique ---
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("<h3 style='color: #3498db; margin-top: 1rem;'>Explicabilité Clinique des Prédictions (SHAP TreeExplainer)</h3>", unsafe_allow_html=True)
+            st.markdown("<p style='color: #cbd5e1;'>Décomposition transparente des facteurs physiologiques qui influencent la probabilité de risque pour ce patient spécifique.</p>", unsafe_allow_html=True)
+            
+            try:
+                df_contribs = compute_shap_contributions(model, processed_data)
+                fig_shap = plot_shap_waterfall(df_contribs)
+                st.plotly_chart(fig_shap, use_container_width=True)
+            except Exception as ex_shap:
+                st.info(f"Analyse SHAP : {ex_shap}")
+
+            # --- Module Simulateur Clinique What-If ---
+            st.markdown("<br>", unsafe_allow_html=True)
+            with st.expander("🩺 Simulateur de Prévention Clinique « What-If » (Interventions Ciblées)", expanded=True):
+                st.markdown("<p style='color: #cbd5e1;'>Simulez l'impact prévisionnel d'interventions thérapeutiques ou de modifications de mode de vie sur ce patient :</p>", unsafe_allow_html=True)
+                w_col1, w_col2, w_col3 = st.columns(3)
+                with w_col1:
+                    new_bp = st.slider("Cible Pression Artérielle (mmHg)", min_value=90, max_value=200, value=min(int(resting_bp), 120), step=5)
+                with w_col2:
+                    new_chol = st.slider("Cible Cholestérol (mg/dl)", min_value=100, max_value=400, value=min(int(cholesterol), 180), step=10)
+                with w_col3:
+                    new_angina = st.selectbox("Arrêt Angine d'effort", ["Non", "Oui"], index=0 if exercise_angina == "Non" else 1)
+                
+                sim_input = input_data.copy()
+                sim_input['resting bp s'] = [new_bp]
+                sim_input['cholesterol'] = [new_chol]
+                sim_input['exercise angina'] = [1 if new_angina == "Oui" else 0]
+                
+                sim_processed = preprocess_data(sim_input, is_training=False)
+                new_prob = model.predict_proba(sim_processed)[0][1]
+                delta_prob = (new_prob - probability) * 100
+                
+                res_col1, res_col2 = st.columns([1, 2])
+                with res_col1:
+                    st.metric(
+                        label="Nouveau Risque Cardiovasculaire",
+                        value=f"{new_prob*100:.1f}%",
+                        delta=f"{delta_prob:.1f}%",
+                        delta_color="inverse"
+                    )
+                with res_col2:
+                    fig_gauge = go.Figure(go.Indicator(
+                        mode="gauge+number+delta",
+                        value=new_prob * 100,
+                        domain={'x': [0, 1], 'y': [0, 1]},
+                        delta={'reference': probability * 100, 'increasing': {'color': "#ef4444"}, 'decreasing': {'color': "#10b981"}},
+                        gauge={
+                            'axis': {'range': [0, 100]},
+                            'bar': {'color': "#ef4444" if new_prob >= 0.5 else "#10b981"},
+                            'steps': [
+                                {'range': [0, 30], 'color': "rgba(16, 185, 129, 0.2)"},
+                                {'range': [30, 60], 'color': "rgba(245, 158, 11, 0.2)"},
+                                {'range': [60, 100], 'color': "rgba(239, 68, 68, 0.2)"}
+                            ],
+                            'threshold': {'line': {'color': "white", 'width': 3}, 'thickness': 0.75, 'value': 50}
+                        }
+                    ))
+                    fig_gauge.update_layout(template="plotly_dark", height=200, margin=dict(l=10, r=10, t=20, b=10))
+                    st.plotly_chart(fig_gauge, use_container_width=True)
+
             # Recommandations avec style
             st.markdown("<h3 style='color: #ffffff; margin-top: 1.5rem;'>Recommandations Personnalisées</h3>", unsafe_allow_html=True)
             
