@@ -237,7 +237,9 @@ def compute_shap_contributions(model, processed_df):
     contribs = []
     for col, v in zip(processed_df.columns, vals):
         label = feature_labels.get(col, col)
-        contribs.append({'feature': label, 'value': float(v)})
+        # v peut être un array numpy (SHAP multi-output) — on extrait le scalaire
+        v_scalar = float(np.ravel(v)[0]) if hasattr(v, '__len__') else float(v)
+        contribs.append({'feature': label, 'value': v_scalar})
 
     df_contribs = pd.DataFrame(contribs)
     df_contribs['abs_val'] = df_contribs['value'].abs()
