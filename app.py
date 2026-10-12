@@ -567,7 +567,11 @@ if page == "Prédiction Clinique":
                 st.metric("Risque Après Intervention", f"{new_prob*100:.1f}%", delta=f"{delta_val:.1f} pts", delta_color="inverse")
                 st.caption(f"Nouveau profil : **{new_tier['level']}**")
             with sw2:
-                st.plotly_chart(plot_risk_gauge(new_prob, new_tier['color']), use_container_width=True)
+                st.plotly_chart(
+                    plot_risk_gauge(new_prob, new_tier['color']),
+                    use_container_width=True,
+                    key="what_if_risk_gauge",
+                )
 
         # ── EXPORT FICHE PATIENT DE CONSULTATION ──
         st.markdown("---")
