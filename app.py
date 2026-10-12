@@ -122,6 +122,67 @@ st.markdown("""
         padding: 1rem;
         margin-bottom: 1.5rem;
     }
+
+    /* A clinical workspace should read like a patient pathway, not a generic dashboard. */
+    [data-testid="stSidebarNav"] {
+        display: none;
+    }
+    [data-testid="stAppViewContainer"] {
+        background:
+            radial-gradient(ellipse at 90% 0%, rgba(20, 184, 166, .10), transparent 34%),
+            #0b1120;
+    }
+    [data-testid="stSidebar"] {
+        background: #101b28;
+        border-right: 1px solid #203446;
+    }
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3 {
+        color: #b9f2e7 !important;
+    }
+    [data-testid="stMetric"] {
+        background: #101c29;
+        border: 1px solid #243b4b;
+        border-radius: 10px;
+        padding: .9rem 1rem;
+    }
+    [data-testid="stMetricLabel"] {
+        color: #9bb7c3;
+        font-size: .74rem;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+    }
+    [data-testid="stRadio"] [role="radiogroup"] {
+        gap: .45rem;
+        background: #101c29;
+        border: 1px solid #243b4b;
+        border-radius: 10px;
+        padding: .5rem;
+    }
+    [data-testid="stRadio"] [role="radiogroup"] label {
+        background: #142433;
+        border: 1px solid #274354;
+        border-radius: 7px;
+        padding: .55rem .9rem;
+    }
+    [data-testid="stRadio"] [role="radiogroup"] label:has(input:checked) {
+        background: #0d4c4c;
+        border-color: #2dd4bf;
+        color: #eafffb;
+    }
+    .clinical-nav-label {
+        color: #7dd3c7;
+        font-size: .75rem;
+        font-weight: 750;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        margin: 0 0 .3rem .1rem;
+    }
+    [data-testid="stPlotlyChart"] {
+        border: 1px solid #203746;
+        border-radius: 10px;
+        overflow: hidden;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -351,12 +412,24 @@ def plot_shap_waterfall(df_contribs):
 
 # ── NAVIGATION ────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("###  Navigation Clinique")
-    page = st.radio(
-        "Menu",
-        ["Prédiction Clinique", "Visualisation des Données", "Architecture & Modèles", "À Propos"],
-        label_visibility="collapsed"
-    )
+    st.markdown("### Espace clinique")
+    st.caption("Évaluation préventive · aide à la décision")
+
+st.markdown('<div class="clinical-nav-label">Parcours clinique</div>', unsafe_allow_html=True)
+page = st.radio(
+    "Parcours clinique",
+    [
+        "Prédiction Clinique",
+        "Visualisation des Données",
+        "Architecture & Modèles",
+        "À Propos",
+    ],
+    horizontal=True,
+    label_visibility="collapsed",
+    key="clinical_navigation",
+)
+
+with st.sidebar:
     st.divider()
     st.caption("Plateforme conforme aux standards d'aide au diagnostic préventif. Machine Learning validé sur cohorte cardiovasculaire multi-paramètres.")
 
