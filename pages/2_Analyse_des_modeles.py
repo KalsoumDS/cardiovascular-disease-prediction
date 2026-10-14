@@ -9,7 +9,7 @@ import joblib
 from sklearn.metrics import confusion_matrix, roc_curve, auc
 import os
 
-st.set_page_config(page_title="Analyse des Données et des Modèles", page_icon="", layout="wide")
+st.set_page_config(page_title="Analyse des données et des modèles", page_icon="", layout="wide")
 
 # Chargement des données et des résultats
 try:
@@ -17,76 +17,103 @@ try:
     df = pd.read_csv('data/data.csv')
     
     # Création d'onglets pour séparer l'analyse des données et l'analyse des modèles
-    tab1, tab2 = st.tabs([" Analyse des Relations", " Performance des Modèles"])
+    tab1, tab2 = st.tabs(["Analyse des relations", "Performance des modèles"])
     
     with tab1:
-        st.title("Analyse des Relations avec la Variable Cible")
+        st.title("Analyse des relations avec la variable cible")
         
         # Section 1: Distribution de la Variable Cible
-        st.header("1. Distribution de la Variable Cible")
+        st.header("1. Répartition de la variable cible")
         col1, col2 = st.columns(2)
         
         with col1:
             target_counts = df['target'].value_counts()
-            st.metric("Nombre de cas sans maladie", target_counts[0])
-            st.metric("Nombre de cas avec maladie", target_counts[1])
+            st.metric("Cas sans maladie", target_counts[0])
+            st.metric("Cas avec maladie", target_counts[1])
         
         with col2:
             target_dist = df['target'].value_counts(normalize=True)
             fig_target = px.pie(values=target_dist.values, 
-                              names=["Pas de maladie", "Maladie cardiaque"],
-                              title="Distribution des Classes")
+                              names=["Absence de maladie", "Maladie cardiovasculaire"],
+                              title="Répartition des classes")
             st.plotly_chart(fig_target)
         
         # Section 2: Corrélations avec la Variable Cible
-        st.header("2. Corrélations avec la Variable Cible")
+        st.header("2. Corrélations avec la variable cible")
+        feature_labels = {
+            "age": "Âge",
+            "sex": "Sexe",
+            "chest pain type": "Type de douleur thoracique",
+            "resting bp s": "Pression artérielle au repos",
+            "cholesterol": "Cholestérol",
+            "fasting blood sugar": "Glycémie à jeun",
+            "resting ecg": "Électrocardiogramme au repos",
+            "max heart rate": "Fréquence cardiaque maximale",
+            "exercise angina": "Angine d’effort",
+            "oldpeak": "Dépression du segment ST",
+            "ST slope": "Pente du segment ST",
+        }
         corr_matrix = df.corr()
         target_corr = corr_matrix['target'].sort_values(ascending=False)
+        target_corr.index = [
+            feature_labels.get(col, "Maladie cardiovasculaire" if col == "target" else col)
+            for col in target_corr.index
+        ]
         fig_corr = px.bar(x=target_corr.index, y=target_corr.values,
-                         title="Force de la Relation entre Chaque Variable et la Maladie Cardiaque",
-                         labels={'x': 'Variables', 'y': 'Coefficient de Corrélation'})
+                         title="Lien entre chaque variable et la maladie cardiovasculaire",
+                         labels={'x': 'Variables', 'y': 'Coefficient de corrélation'})
         fig_corr.update_layout(showlegend=False)
         st.plotly_chart(fig_corr, use_container_width=True)
         
         # Interprétation spécifique
-        st.subheader("Interprétation spécifique des corrélations avec la variable cible")
+        st.subheader("Interprétation des corrélations avec la variable cible")
         st.markdown("""
-- La variable la plus corrélée avec la maladie est `ST slope`, suivie de `chest pain type`, `exercise angina` et `oldpeak`.
-- Les autres variables (`sex`, `age`, `fasting blood sugar`, etc.) ont une corrélation beaucoup plus faible avec la maladie.
-- Cela signifie que les variables liées à l'électrocardiogramme et à la douleur thoracique sont les plus informatives pour prédire la maladie cardiaque dans cette base.
-- Les variables comme le cholestérol ou la fréquence cardiaque maximale, bien que médicalement pertinentes, n'apportent pas ici une forte capacité de discrimination dans ce jeu de données.
+- Les variables les plus corrélées avec la maladie sont la pente du segment ST, le type de douleur thoracique, l’angine d’effort et la dépression du segment ST.
+- Les autres variables (sexe, âge, glycémie à jeun, etc.) ont une corrélation beaucoup plus faible avec la maladie.
+- Cela signifie que les variables liées à l’électrocardiogramme et à la douleur thoracique sont les plus informatives pour prédire la maladie cardiovasculaire dans cette base.
+- Le cholestérol et la fréquence cardiaque maximale, bien que médicalement pertinents, distinguent peu les classes dans ce jeu de données.
 """)
         
         # Section 3: Analyse Détaillée des Relations
-        st.header("3. Analyse Détaillée des Relations")
+        st.header("3. Analyse détaillée des relations")
         
         # Sélection de variable
         numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
-        selected_var = st.selectbox("Sélectionnez une variable à analyser", 
-                                  [col for col in numeric_cols if col != 'target'])
+        selected_var = st.selectbox(
+            "Sélectionnez une variable à analyser",
+            [col for col in numeric_cols if col != 'target'],
+            format_func=lambda col: feature_labels.get(col, col),
+        )
         
         col1, col2 = st.columns(2)
         
         with col1:
             # Box plot
-            fig_box = px.box(df, x='target', y=selected_var, 
-                           title=f"Distribution de {selected_var} par classe",
-                           labels={'target': 'Maladie Cardiaque (0: Non, 1: Oui)', 
-                                 'y': selected_var})
+            df_plot = df.assign(Statut=df["target"].map({0: "Sans maladie", 1: "Maladie cardiovasculaire"}))
+            fig_box = px.box(df_plot, x='Statut', y=selected_var,
+                           title=f"Répartition de {feature_labels.get(selected_var, selected_var)} par classe",
+                           labels={'Statut': 'Statut clinique',
+                                 'y': feature_labels.get(selected_var, selected_var)})
             st.plotly_chart(fig_box)
             
             # Statistiques descriptives
-            st.subheader("Statistiques Descriptives")
+            st.subheader("Statistiques descriptives")
             stats_df = df.groupby('target')[selected_var].describe()
-            stats_df.index = ['Sans Maladie', 'Avec Maladie']
+            stats_df.index = ['Sans maladie', 'Avec maladie']
+            stats_df = stats_df.rename(columns={
+                "count": "Effectif", "mean": "Moyenne", "std": "Écart-type",
+                "min": "Minimum", "25%": "1er quartile", "50%": "Médiane",
+                "75%": "3e quartile", "max": "Maximum",
+            })
+            stats_df.columns.name = feature_labels.get(selected_var, selected_var)
             st.dataframe(stats_df)
             
             # Interprétation spécifique pour le box plot
             if selected_var == "age":
                 st.markdown("""
-- La distribution de l'âge est très similaire pour les deux classes (maladie présente ou non).
+- La distribution de l’âge est très similaire pour les deux classes (maladie présente ou non).
 - Les médianes et les étendues sont proches.
-- L'âge seul ne permet pas de distinguer efficacement les deux groupes dans cette base.
+- L’âge seul ne permet pas de distinguer efficacement les deux groupes dans cette base.
 """)
             elif selected_var == "sex":
                 st.markdown("""
@@ -96,9 +123,9 @@ try:
         
         with col2:
             # Histogramme
-            fig_hist = px.histogram(df, x=selected_var, color='target',
-                                  title=f"Distribution de {selected_var} selon la présence de maladie",
-                                  labels={'target': 'Maladie Cardiaque',
+            fig_hist = px.histogram(df_plot, x=selected_var, color='Statut',
+                                  title=f"Répartition de {feature_labels.get(selected_var, selected_var)} selon la présence de la maladie",
+                                  labels={'Statut': 'Statut clinique',
                                         'count': 'Nombre de cas'},
                                   color_discrete_map={0: 'blue', 1: 'red'},
                                   barmode='overlay')
@@ -112,14 +139,20 @@ try:
             st.metric("Différence des moyennes", f"{stat - p_value:.2f}")
     
     with tab2:
-        st.title("Analyse des Performances des Modèles")
+        st.title("Analyse des performances des modèles")
         
         # Section 1: Vue d'ensemble des performances
-        st.header("1. Comparaison Globale des Modèles")
+        st.header("1. Comparaison globale des modèles")
+        metric_labels = {
+            "Accuracy": "Exactitude",
+            "Precision": "Précision",
+            "Recall": "Rappel",
+        }
         metrics = st.multiselect(
             "Sélectionnez les métriques à comparer",
             ['Accuracy', 'Precision', 'Recall'],
-            default=['Accuracy']
+            default=['Accuracy'],
+            format_func=lambda metric: metric_labels[metric],
         )
         
         if metrics:
@@ -127,47 +160,57 @@ try:
                         x='Modèle', 
                         y=metrics,
                         barmode='group',
-                        title="Comparaison des Performances des Modèles")
+                        title="Comparaison des performances des modèles",
+                        labels={**metric_labels, "Modèle": "Modèle", "value": "Score"})
             st.plotly_chart(fig, use_container_width=True)
         
         # Section 2: Analyse détaillée par modèle
-        st.header("2. Analyse Détaillée par Modèle")
+        st.header("2. Analyse détaillée par modèle")
         model_choice = st.selectbox(
             "Sélectionnez un modèle à analyser",
-            results_df['Modèle'].tolist()
+            results_df['Modèle'].tolist(),
+            format_func=lambda model: {
+                "Régression Logistique": "Régression logistique",
+                "Logistic Regression": "Régression logistique",
+                "Random Forest": "Forêt aléatoire",
+                "Decision Tree": "Arbre de décision",
+                "Arbre de Décision": "Arbre de décision",
+                "KNN": "K plus proches voisins (KNN)",
+                "KMeans": "K-moyennes",
+            }.get(model, model),
         )
         
         if model_choice:
             model_name = model_choice.lower().replace(" ", "_")
             
             # Métriques principales
-            st.subheader("Métriques de Performance")
+            st.subheader("Indicateurs de performance")
             model_metrics = results_df[results_df['Modèle'] == model_choice].iloc[0]
             col1, col2 = st.columns(2)
             
             with col1:
-                st.metric("Accuracy", f"{model_metrics['Accuracy']:.3f}")
-                st.metric("Precision", f"{model_metrics['Precision']:.3f}")
+                st.metric("Exactitude", f"{model_metrics['Accuracy']:.3f}")
+                st.metric("Précision", f"{model_metrics['Precision']:.3f}")
             
             with col2:
-                st.metric("Recall", f"{model_metrics['Recall']:.3f}")
+                st.metric("Rappel", f"{model_metrics['Recall']:.3f}")
             
             # Interprétation des métriques pour la régression logistique
             if model_choice == "Régression Logistique":
                 st.markdown("""
 **Interprétation des métriques** :
-- Le modèle prédit correctement 87 % des cas (accuracy).
+- Le modèle prédit correctement 87 % des cas (exactitude).
 - Parmi les cas prédits comme "maladie", 86,8 % sont réellement malades (précision).
-- Il détecte 90,1 % des vrais cas de maladie (recall).
+- Il détecte 90,1 % des vrais cas de maladie (rappel).
 """)
             
             # Interprétation des métriques pour la random forest
             if model_choice == "Random Forest":
                 st.markdown("""
 **Interprétation des métriques** :
-- Le modèle prédit correctement 95 % des cas (accuracy), ce qui est excellent.
+- Le modèle prédit correctement 95 % des cas (exactitude), ce qui est excellent.
 - Parmi les cas prédits comme "maladie", 94,1 % sont réellement malades (précision).
-- Il détecte 96,9 % des vrais cas de maladie (recall).
+- Il détecte 96,9 % des vrais cas de maladie (rappel).
 """)
             
             # Visualisations

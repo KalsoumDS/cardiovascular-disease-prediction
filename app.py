@@ -1,6 +1,6 @@
 """
 Système Avancé d'Aide au Diagnostic & Prédiction du Risque Cardiovasculaire
-Plateforme MedTech SOTA — Machine Learning Clinique, Explicabilité SHAP & Simulation Préventive
+Plateforme MedTech SOTA — apprentissage automatique clinique, explicabilité SHAP et simulation préventive
 """
 import streamlit as st
 import pandas as pd
@@ -431,23 +431,23 @@ page = st.radio(
 
 with st.sidebar:
     st.divider()
-    st.caption("Plateforme conforme aux standards d'aide au diagnostic préventif. Machine Learning validé sur cohorte cardiovasculaire multi-paramètres.")
+    st.caption("Plateforme d’aide à la décision préventive, évaluée sur une cohorte cardiovasculaire à plusieurs paramètres.")
 
 
 # ── PAGE 1 : PRÉDICTION CLINIQUE ──────────────────────────────────────────────
 if page == "Prédiction Clinique":
     st.markdown("""
     <div class="med-header">
-        <h1 class="med-title">Diagnostic Clinique & Évaluation Cardiovasculaire</h1>
+        <h1 class="med-title">Évaluation clinique du risque cardiovasculaire</h1>
         <p class="med-subtitle">
-            Système expert combinant Machine Learning (Random Forest / XGBoost), explicabilité locale SHAP 
-            et simulation d'impact préventif (« What-If »).
+            Système d’aide à la décision combinant apprentissage automatique (forêt aléatoire / XGBoost),
+            explications locales SHAP et simulation de mesures préventives.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     # ── Presets Cliniques en 1 Clic ──
-    st.markdown("#####  Profils Patients Prédéfinis (Test Instantané)")
+    st.markdown("##### Profils de démonstration")
     p_col1, p_col2, p_col3, p_col4 = st.columns(4)
     
     if 'preset_loaded' not in st.session_state:
@@ -501,7 +501,7 @@ if page == "Prédiction Clinique":
             chest_pain = st.selectbox("Type de douleur thoracique", list(chest_pain_mapping.keys()),
                                     index=list(chest_pain_mapping.keys()).index(st.session_state.get('f_cp', "Atypique")))
             resting_bp = st.number_input("Pression artérielle systolique au repos (mmHg)", min_value=85, max_value=230, value=st.session_state.get('f_bp', 130))
-            oldpeak = st.number_input("Dépression du segment ST (oldpeak)", min_value=0.0, max_value=8.0, value=float(st.session_state.get('f_peak', 0.5)), step=0.1)
+            oldpeak = st.number_input("Dépression du segment ST", min_value=0.0, max_value=8.0, value=float(st.session_state.get('f_peak', 0.5)), step=0.1)
 
         with col2:
             st.markdown("####  Paramètres Métaboliques & Électrophysiologiques")
@@ -518,11 +518,11 @@ if page == "Prédiction Clinique":
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-    btn_predict = st.button(" Lancer l'Analyse Diagnostique Médicale", type="primary", use_container_width=True)
+    btn_predict = st.button("Lancer l’évaluation clinique", type="primary", use_container_width=True)
 
     # Traitement
     if btn_predict or st.session_state.get('preset_loaded'):
-        with st.spinner("Modélisation en cours & inférence de l'ensemble d'arbres..."):
+        with st.spinner("Évaluation du profil en cours…"):
             try:
                 model = joblib.load('models/random_forest_model.joblib')
 
@@ -574,20 +574,20 @@ if page == "Prédiction Clinique":
         g_col1, g_col2, g_col3 = st.columns([1.2, 1, 1])
 
         with g_col1:
-            st.markdown("#####  Score Prédictif Machine Learning")
+            st.markdown("##### Estimation du modèle d’apprentissage automatique")
             st.plotly_chart(plot_risk_gauge(probability, tier['color']), use_container_width=True)
 
         with g_col2:
-            st.markdown("#####  Benchmark Clinique (Framingham / SCORE2)")
+            st.markdown("##### Comparaison avec Framingham / SCORE2")
             st.plotly_chart(plot_risk_gauge(framingham_prob, "#38bdf8"), use_container_width=True)
 
         with g_col3:
             st.markdown("#####  Concordance Diagnostique")
             ecart = abs(probability - framingham_prob) * 100
-            st.metric("Écart IA vs Abaque Clinique", f"{ecart:.1f} pts", delta="- Concordance Forte" if ecart < 15 else "Alerte de divergence", delta_color="normal" if ecart < 15 else "inverse")
+            st.metric("Écart avec l’estimation clinique", f"{ecart:.1f} points", delta="Bonne concordance" if ecart < 15 else "Écart important", delta_color="normal" if ecart < 15 else "inverse")
             st.markdown(f"""
             <div style="background: #1e293b; padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; color: #94a3b8; margin-top: 0.5rem;">
-                Le modèle ML affine l'évaluation grâce à l'analyse non-linéaire conjointe de l'électrophysiologie ST et de l'effort.
+                Le modèle affine l’évaluation en analysant conjointement les mesures électrocardiographiques et la réponse à l’effort.
             </div>
             """, unsafe_allow_html=True)
 
@@ -597,7 +597,7 @@ if page == "Prédiction Clinique":
         r_col1, r_col2 = st.columns([1, 1.2])
 
         with r_col1:
-            st.markdown("#####  Profil de Vulnérabilité des 4 Piliers")
+            st.markdown("##### Profil de vulnérabilité selon quatre facteurs")
             raw_dict = {
                 'resting bp s': resting_bp,
                 'cholesterol': cholesterol,
@@ -609,21 +609,21 @@ if page == "Prédiction Clinique":
             st.plotly_chart(plot_cardio_radar(raw_dict), use_container_width=True)
 
         with r_col2:
-            st.markdown("#####  Explicabilité Locale SHAP (Facteurs Décisifs)")
+            st.markdown("##### Explication locale SHAP : facteurs déterminants")
             df_contribs = compute_shap_contributions(model, processed_data)
             st.plotly_chart(plot_shap_waterfall(df_contribs), use_container_width=True)
 
-        # ── SIMULATEUR WHAT-IF INTERACTIF ──
+        # ── SIMULATEUR DE MESURES PRÉVENTIVES ──
         st.markdown("---")
-        with st.expander(" Simulateur de Prévention Clinique « What-If » (Interventions Ciblées)", expanded=True):
-            st.markdown("Simulez l'impact thérapeutique immédiat d'une normalisation de la tension, du cholestérol ou de l'arrêt du tabac :")
+        with st.expander("Simuler l’effet de mesures préventives", expanded=True):
+            st.markdown("Estimez l’effet d’une amélioration de la tension ou du cholestérol, ou de la prise en charge de l’angine d’effort :")
             w1, w2, w3 = st.columns(3)
             with w1:
-                target_bp = st.slider("Objectif Pression Systolique (mmHg)", 90, 200, min(int(resting_bp), 120), step=5)
+                target_bp = st.slider("Tension systolique visée (mmHg)", 90, 200, min(int(resting_bp), 120), step=5)
             with w2:
-                target_chol = st.slider("Objectif Cholestérol (mg/dl)", 100, 350, min(int(cholesterol), 175), step=5)
+                target_chol = st.slider("Cholestérol visé (mg/dl)", 100, 350, min(int(cholesterol), 175), step=5)
             with w3:
-                target_angina = st.selectbox("Arrêt / Traitement Angine d'effort", ["Non", "Oui"], index=0)
+                target_angina = st.selectbox("Prise en charge de l’angine d’effort", ["Non", "Oui"], index=0)
 
             sim_df = input_data.copy()
             sim_df['resting bp s'] = [target_bp]
@@ -637,7 +637,7 @@ if page == "Prédiction Clinique":
 
             sw1, sw2 = st.columns([1, 2])
             with sw1:
-                st.metric("Risque Après Intervention", f"{new_prob*100:.1f}%", delta=f"{delta_val:.1f} pts", delta_color="inverse")
+                st.metric("Risque estimé après intervention", f"{new_prob*100:.1f}%", delta=f"{delta_val:.1f} points", delta_color="inverse")
                 st.caption(f"Nouveau profil : **{new_tier['level']}**")
             with sw2:
                 st.plotly_chart(
@@ -658,10 +658,10 @@ Identifiant Consultation : CRD-{int(datetime.now().timestamp())}
 - Cholestérol total : {cholesterol} mg/dl
 - Glycémie à jeun : {fasting_bs}
 - ECG au repos : {resting_ecg}
-- Dépression ST (oldpeak) : {oldpeak} mm | Pente ST : {st_slope}
+- Dépression du segment ST : {oldpeak} mm | Pente ST : {st_slope}
 - Fréquence cardiaque maximale : {max_hr} bpm | Angine à l'effort : {exercise_angina}
 
-## 2. ÉVALUATION IA & MACHINE LEARNING
+## 2. ÉVALUATION PAR APPRENTISSAGE AUTOMATIQUE
 - Probabilité de risque estimée : {probability*100:.1f}%
 - Statut diagnostique : {tier['level']}
 - Indice classique Framingham : {framingham_prob*100:.1f}%
@@ -671,7 +671,7 @@ Identifiant Consultation : CRD-{int(datetime.now().timestamp())}
 - Surveillance régulière de la pression artérielle et du bilan lipidique.
 """
         st.download_button(
-            " Télécharger la Fiche de Synthèse Clinique (Markdown)",
+            "Télécharger la fiche de synthèse clinique (texte)",
             report_text,
             file_name=f"bilan_cardio_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
             mime="text/markdown",
@@ -681,16 +681,27 @@ Identifiant Consultation : CRD-{int(datetime.now().timestamp())}
 
 # ── PAGE 2 : VISUALISATION DES DONNÉES ────────────────────────────────────────
 elif page == "Visualisation des Données":
-    st.markdown('<div class="med-header"><h1 class="med-title">Exploration & Analyse de la Cohorte Cardiovasculaire</h1></div>', unsafe_allow_html=True)
+    st.markdown('<div class="med-header"><h1 class="med-title">Exploration de la cohorte cardiovasculaire</h1></div>', unsafe_allow_html=True)
     try:
         df_pop = pd.read_csv("data/data.csv")
-        st.dataframe(df_pop.head(10), use_container_width=True)
+        display_labels = {
+            "age": "Âge", "sex": "Sexe", "chest pain type": "Type de douleur thoracique",
+            "resting bp s": "Pression artérielle au repos", "cholesterol": "Cholestérol",
+            "fasting blood sugar": "Glycémie à jeun", "resting ecg": "Électrocardiogramme au repos",
+            "max heart rate": "Fréquence cardiaque maximale", "exercise angina": "Angine d’effort",
+            "oldpeak": "Dépression du segment ST", "ST slope": "Pente du segment ST",
+            "target": "Maladie cardiovasculaire",
+        }
+        st.dataframe(df_pop.head(10).rename(columns=display_labels), use_container_width=True)
+        df_plot = df_pop.assign(
+            Statut=df_pop["target"].map({0: "Sans maladie", 1: "Maladie cardiovasculaire"})
+        )
         col_v1, col_v2 = st.columns(2)
         with col_v1:
-            fig_hist = px.histogram(df_pop, x="age", color="target", barmode="overlay", title="Distribution des âges par statut cardiovasculaire", template="plotly_dark", color_discrete_sequence=["#10b981", "#ef4444"])
+            fig_hist = px.histogram(df_plot, x="age", color="Statut", barmode="overlay", title="Répartition des âges selon le statut cardiovasculaire", labels={"age": "Âge", "Statut": "Statut clinique", "count": "Nombre de personnes"}, template="plotly_dark", color_discrete_sequence=["#10b981", "#ef4444"])
             st.plotly_chart(fig_hist, use_container_width=True)
         with col_v2:
-            fig_scatter = px.scatter(df_pop, x="cholesterol", y="resting bp s", color="target", title="Pression artérielle vs Cholestérol", template="plotly_dark", color_discrete_sequence=["#10b981", "#ef4444"])
+            fig_scatter = px.scatter(df_plot, x="cholesterol", y="resting bp s", color="Statut", title="Pression artérielle selon le cholestérol", labels={"cholesterol": "Cholestérol", "resting bp s": "Pression artérielle au repos", "Statut": "Statut clinique"}, template="plotly_dark", color_discrete_sequence=["#10b981", "#ef4444"])
             st.plotly_chart(fig_scatter, use_container_width=True)
     except Exception as e:
         st.info("Données de cohorte en cours de chargement...")
@@ -698,19 +709,19 @@ elif page == "Visualisation des Données":
 
 # ── PAGE 3 : ARCHITECTURE & MODÈLES ───────────────────────────────────────────
 elif page == "Architecture & Modèles":
-    st.markdown('<div class="med-header"><h1 class="med-title">Architecture des Modèles & Benchmarks SOTA</h1></div>', unsafe_allow_html=True)
+    st.markdown('<div class="med-header"><h1 class="med-title">Architecture et comparaison des modèles</h1></div>', unsafe_allow_html=True)
     st.markdown("""
-    ### Pipeline d'Ingénierie & Validation
-    - **Algorithmes comparés** : Random Forest, XGBoost, LightGBM, Régression Logistique.
-    - **Validation Croisée** : 5-Fold Stratified K-Fold.
-    - **Explicabilité** : Noyau SHAP TreeExplainer garantissant la décomposition additive locale.
+    ### Chaîne de traitement et validation
+    - **Algorithmes comparés** : forêt aléatoire, XGBoost, LightGBM et régression logistique.
+    - **Validation croisée** : validation stratifiée en cinq plis.
+    - **Explicabilité** : SHAP TreeExplainer décompose les facteurs ayant contribué à chaque estimation.
     """)
 
 
 # ── PAGE 4 : À PROPOS ─────────────────────────────────────────────────────────
 elif page == "À Propos":
-    st.markdown('<div class="med-header"><h1 class="med-title">À Propos de CardioSOTA</h1></div>', unsafe_allow_html=True)
+    st.markdown('<div class="med-header"><h1 class="med-title">À propos de CardioSOTA</h1></div>', unsafe_allow_html=True)
     st.markdown("""
-    **CardioSOTA** est une application d'aide à la décision médicale préventive conçue par **Oumou Kaltoum Sall** (R&D Data Scientist / ML Engineer).
-    Elle démontre la mise en production de modèles d'IA interprétables (XAI) appliqués à la santé.
+    **CardioSOTA** est une application d'aide à la décision médicale préventive conçue par **Oumou Kaltoum Sall** (scientifique des données et ingénieure en recherche et développement).
+    Elle illustre le déploiement de modèles d’intelligence artificielle explicables appliqués à la santé.
     """)

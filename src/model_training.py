@@ -13,12 +13,26 @@ import seaborn as sns
 import joblib
 from src.data_preprocessing import load_data, preprocess_data, split_data
 
+MODEL_LABELS_FR = {
+    "Random Forest": "Forêt aléatoire",
+    "Régression Logistique": "Régression logistique",
+    "Arbre de Décision": "Arbre de décision",
+    "KNN": "K plus proches voisins (KNN)",
+    "KMeans": "K-moyennes",
+}
+
+
 def plot_confusion_matrix(y_true, y_pred, model_name):
     """Visualise la matrice de confusion"""
     cm = confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(8, 6))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-    plt.title(f'Matrice de Confusion - {model_name}')
+    sns.heatmap(
+        cm, annot=True, fmt='d', cmap='Blues',
+        xticklabels=['Sans maladie', 'Avec maladie'],
+        yticklabels=['Sans maladie', 'Avec maladie'],
+    )
+    display_name = MODEL_LABELS_FR.get(model_name, model_name)
+    plt.title(f'Matrice de confusion — {display_name}')
     plt.ylabel('Valeurs Réelles')
     plt.xlabel('Prédictions')
     plt.savefig(f'confusion_matrix_{model_name.lower().replace(" ", "_")}.png')
@@ -34,7 +48,7 @@ def plot_roc_curve(y_true, y_prob, model_name):
     plt.plot([0, 1], [0, 1], 'k--')
     plt.xlabel('Taux de Faux Positifs')
     plt.ylabel('Taux de Vrais Positifs')
-    plt.title(f'Courbe ROC - {model_name}')
+    plt.title(f'Courbe ROC — {MODEL_LABELS_FR.get(model_name, model_name)}')
     plt.legend()
     plt.savefig(f'roc_curve_{model_name.lower().replace(" ", "_")}.png')
     plt.close()
@@ -47,7 +61,7 @@ def plot_precision_recall_curve(y_true, y_prob, model_name):
     plt.plot(recall, precision)
     plt.xlabel('Rappel')
     plt.ylabel('Précision')
-    plt.title(f'Courbe Précision-Rappel - {model_name}')
+    plt.title(f'Courbe précision-rappel — {MODEL_LABELS_FR.get(model_name, model_name)}')
     plt.savefig(f'precision_recall_{model_name.lower().replace(" ", "_")}.png')
     plt.close()
 
@@ -69,7 +83,7 @@ def plot_learning_curve(model, X, y, model_name):
     plt.fill_between(train_sizes, test_mean - test_std, test_mean + test_std, alpha=0.1)
     plt.xlabel('Taille de l\'ensemble d\'entraînement')
     plt.ylabel('Score')
-    plt.title(f'Courbe d\'Apprentissage - {model_name}')
+    plt.title(f'Courbe d’apprentissage — {MODEL_LABELS_FR.get(model_name, model_name)}')
     plt.legend(loc='best')
     plt.grid(True)
     plt.savefig(f'learning_curve_{model_name.lower().replace(" ", "_")}.png')
@@ -154,22 +168,45 @@ def plot_feature_importance(model, feature_names, model_name):
         indices = np.argsort(importance)[::-1]
         
         plt.figure(figsize=(12, 8))
-        plt.title(f'Importance des caractéristiques - {model_name}')
+        plt.title(f'Importance des variables — {MODEL_LABELS_FR.get(model_name, model_name)}')
         plt.bar(range(len(importance)), importance[indices])
-        plt.xticks(range(len(importance)), feature_names[indices], rotation=45, ha='right')
+        feature_labels = {
+            "age": "Âge",
+            "sex": "Sexe",
+            "chest pain type": "Type de douleur thoracique",
+            "resting bp s": "Pression artérielle au repos",
+            "cholesterol": "Cholestérol",
+            "fasting blood sugar": "Glycémie à jeun",
+            "resting ecg": "Électrocardiogramme au repos",
+            "max heart rate": "Fréquence cardiaque maximale",
+            "exercise angina": "Angine d’effort",
+            "oldpeak": "Dépression du segment ST",
+            "ST slope": "Pente du segment ST",
+        }
+        plt.xticks(
+            range(len(importance)),
+            [feature_labels.get(str(feature_names[i]), str(feature_names[i])) for i in indices],
+            rotation=45, ha='right',
+        )
         plt.tight_layout()
         plt.savefig(f'feature_importance_{model_name.lower().replace(" ", "_")}.png')
         plt.close()
 
 def plot_results(results_df):
     """Visualise les résultats des différents modèles"""
-    metrics = ['Accuracy', 'Precision', 'Recall', 'F1-Score']
+    metric_labels = {
+        'Accuracy': 'Exactitude',
+        'Precision': 'Précision',
+        'Recall': 'Rappel',
+        'F1-Score': 'Score F1',
+    }
+    metrics = list(metric_labels)
     
     plt.figure(figsize=(15, 10))
     for i, metric in enumerate(metrics, 1):
         plt.subplot(2, 2, i)
         sns.barplot(x='Modèle', y=metric, data=results_df)
-        plt.title(f'Comparaison des modèles - {metric}')
+        plt.title(f'Comparaison des modèles — {metric_labels[metric]}')
         plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
     plt.savefig('model_comparison.png')

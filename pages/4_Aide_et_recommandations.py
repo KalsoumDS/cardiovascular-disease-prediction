@@ -1,17 +1,17 @@
 import streamlit as st
 
-st.set_page_config(page_title="Aide et Recommandations", page_icon="ℹ")
+st.set_page_config(page_title="Aide et recommandations", page_icon="ℹ")
 
-st.title("Aide et Recommandations")
+st.title("Aide et recommandations")
 
 # Navigation dans la page
 section = st.sidebar.radio(
     "Navigation",
-    ["Guide d'Utilisation", "Recommandations Générales", "FAQ", "Contact"]
+    ["Guide d’utilisation", "Recommandations générales", "Questions fréquentes", "Contact"]
 )
 
-if section == "Guide d'Utilisation":
-    st.header("Guide d'Utilisation")
+if section == "Guide d’utilisation":
+    st.header("Guide d’utilisation")
     
     st.markdown("""
     ### Comment utiliser l'application
@@ -20,9 +20,9 @@ if section == "Guide d'Utilisation":
        - Présentation générale du système
        - Navigation vers les différentes fonctionnalités
     
-    2. **Prédiction du Risque**
+    2. **Évaluation du risque**
        - Remplissez le formulaire avec vos informations médicales
-       - Cliquez sur "Obtenir la Prédiction"
+       - Cliquez sur « Obtenir l’estimation »
        - Consultez vos résultats et recommandations
     
     3. **Visualisation des Données**
@@ -30,10 +30,10 @@ if section == "Guide d'Utilisation":
        - Sélectionnez le type de graphique souhaité
        - Analysez les corrélations et distributions
     
-    4. **Analyse des Modèles**
+    4. **Analyse des modèles**
        - Comparez les performances des différents modèles
        - Consultez les matrices de confusion
-       - Visualisez l'importance des caractéristiques
+       - Consultez l’importance des variables
     """)
     
     st.markdown("""
@@ -44,8 +44,8 @@ if section == "Guide d'Utilisation":
     - **Risque Élevé** : Prenez rendez-vous rapidement avec un cardiologue
     """)
 
-elif section == "Recommandations Générales":
-    st.header("Recommandations Générales")
+elif section == "Recommandations générales":
+    st.header("Recommandations générales")
     
     st.markdown("""
     ### Prévention des Maladies Cardiovasculaires
@@ -74,12 +74,12 @@ elif section == "Recommandations Générales":
        - Consultation médicale régulière
     """)
 
-elif section == "FAQ":
-    st.header("Foire Aux Questions")
+elif section == "Questions fréquentes":
+    st.header("Foire aux questions")
     
     faq = {
         "Quelle est la précision du système ?": 
-            "Notre système utilise plusieurs modèles de machine learning avec une précision moyenne de 85-90%.",
+            "Notre système utilise plusieurs modèles d’apprentissage automatique avec une précision moyenne de 85 à 90 %.",
         
         "Puis-je utiliser ces résultats pour un diagnostic médical ?":
             "Non, ces résultats sont indicatifs et ne remplacent pas un diagnostic médical professionnel.",
@@ -90,7 +90,7 @@ elif section == "FAQ":
         "Quels sont les facteurs de risque pris en compte ?":
             "Âge, sexe, pression artérielle, cholestérol, diabète, tabagisme, etc.",
         
-        "Comment puis-je améliorer mon score ?":
+        "Comment puis-je améliorer mon résultat ?":
             "Suivez les recommandations personnalisées et consultez régulièrement votre médecin."
     }
     
@@ -99,7 +99,7 @@ elif section == "FAQ":
             st.write(reponse)
 
 else:  # Contact
-    st.header("Contact et Support")
+    st.header("Contact et assistance")
     
     st.markdown("""
     Pour toute question ou assistance
@@ -117,13 +117,13 @@ else:  # Contact
         st.subheader("Envoyez-nous un message")
         
         name = st.text_input("Nom")
-        email = st.text_input("Email")
+        email = st.text_input("Adresse courriel")
         subject = st.selectbox("Sujet", 
                              ["Question technique", 
                               "Problème d'utilisation",
                               "Suggestion d'amélioration",
                               "Autre"])
-        message = st.text_area("Message")
+        message = st.text_area("Votre message")
         
         if st.form_submit_button("Envoyer"):
             st.success("Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.") 
